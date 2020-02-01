@@ -5,7 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
 
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link
+      rel="stylesheet"
+      href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
+      integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh"
+      crossorigin="anonymous"
+    />
     <script
       src="https://code.jquery.com/jquery-3.4.1.slim.min.js"
       integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n"
@@ -32,9 +37,16 @@
     <h1>Dropdown</h1>
     <div x-data="{ open: false }">
       <button @click="open = true">Open Dropdown</button>
+      <button @click="open = true">Open Dropdown 2</button>
 
       <ul x-show="open" @click.away="open = false">
         Dropdown Body
+      </ul>
+      <ul x-show="open" @click.away="open = false">
+        Dropdown Body 2
+      </ul>
+      <ul x-show="open" @click.away="open = false">
+        Dropdown Body 3
       </ul>
     </div>
 
@@ -47,8 +59,55 @@
         Bar
       </button>
 
-      <div x-show="tab === 'foo'">Tab Foo</div>
-      <div x-show="tab === 'bar'">Tab Bar</div>
+      <div x-show="tab === 'foo'">Tab Foo fsdkfjñlksdjfalsdkjf</div>
+      <div x-show="tab === 'bar'">Tab Bar kljlkjjkljklj</div>
+    </div>
+
+    <h1>To-Do list con Alpinejs</h1>
+    <h3>Tutorial: <a href="https://youtu.be/00L-jNwihys">Youtube</a></h3>
+    <div x-data=" tareas() ">
+      <form @submit.prevent="agregar()">
+        <input type="text" x-model="titulo" />
+        <button type="submit"   >Agregar tarea</button>
+      </form>
+      <div>
+        <ul>
+          <template x-for="tareaItem in tareas" :key="tareaItem.id" >
+            <li :class="{ 'is-complete': tareaItem.terminada === true}" >
+              <span x-text="tareaItem.titulo" ></span>
+                <input type="checkbox" x-model="tareaItem.terminada" name="" id="" />
+                <button type="submit" @click="quitar(tareaItem.id)" ><b>X</b></button>
+            </li>
+          </template>
+        </ul>
+      </div>
     </div>
   </body>
+  <script>
+    function tareas() {
+      return{
+        cantidad: 2,
+        titulo: '',
+        tareas: [
+          {
+            id: 1,
+            titulo: 'Viajar a Dubai',
+            terminada: false
+          }
+        ],
+        agregar(){
+          if(this.titulo.trim() === '') return;
+          this.tareas.push({
+            id: this.cantidad++,
+            titulo: this.titulo,
+            terminada: false
+          });
+          this.titulo = '';
+        },
+        quitar(eliminarTarea){
+          this.tareas = this.tareas.filter( tareaItem => tareaItem.id != eliminarTarea )
+        }
+      }
+    }
+  </script>
 </html>
